@@ -27,9 +27,18 @@ items = [
 ]
 
 def item_detail(request, item_id):
-    for _ in items:
-        if _['id'] == item_id:
+    for item in items:
+        if item['id'] == item_id:
             return HttpResponse(f"<h1>{item['name']}</h1>")
     
-    # Если товар не найден 
+    # Товар не найден 
     return HttpResponse(f"<h1>Товар с id={item_id} не найден</h1>", status=404)
+
+'''Cписок товаров'''
+def items_list(request):
+    items_html = "<ol>"
+    for item in items:
+        items_html += f'<li><a href="/item/{item["id"]}">{item["name"]}</a></li>'
+    items_html += "</ol>"
+    
+    return HttpResponse(items_html)
