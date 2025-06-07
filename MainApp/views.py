@@ -3,21 +3,24 @@ from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 
 def home(request):
-    text = """
-    <h1>Изучаем Django</h1>
-    <strong>Автор</strong>
-    """
-    return HttpResponse(text)
+    context = {
+        'title': 'Главная страница',
+        'header': 'Добро пожаловать в наш магазин',
+        'description': 'Здесь вы можете найти все, что вам нужно'
+    }
+    return render(request, 'MainApp/index.django.html', context)
 
 def about_page(request):
-    text = """
-    <h1>Имя: Иван</h1>
-    <p>Отчество: Петрович</p>
-    <p>Фамилия: Иванов</p>
-    <p>Телефон: 8-923-600-01-02</p>
-    <p>Email: vasya@mail.ru</p>
-    """
-    return HttpResponse(text)
+    context = {
+        'title': 'О нас',
+        'header': 'Информация о нас',
+        'name': 'Иван',
+        'middle_name': 'Петрович',
+        'surname': 'Иванов',
+        'phone': '8-923-600-01-02',
+        'email': 'vasya@mail.ru'
+    }
+    return render(request, 'MainApp/about.html', context)
 
 items = [
     {"id": 1, "name": "Кроссовки abibas", "quantity": 5},
@@ -32,22 +35,23 @@ def item_detail(request, item_id):
         item_id = int(item_id)
         for item in items:
             if item['id'] == item_id:
-                return HttpResponse(f"""
-                    <h1>{item['name']}</h1>
-                    <p>Количество товара: {item['quantity']}</p>
-                    <p><a href="/items/">Назад к списку товаров</a></p>
-                """)
+                quantity = item.get('quantity', 0)
+                context = {
+                    'title': item['name'],
+                    'header': item['name'],
+                    'quantity': quantity
+                }
+                return render(request, 'MainApp/item_detail.html', context)
         
-        # Товар не найден 
         return HttpResponseNotFound(f'Товар с id={item_id} не найден')
     except ValueError:
         return HttpResponseNotFound('Неверный формат ID товара')
 
 '''Cписок товаров'''
 def items_list(request):
-    items_html = "<ol>"
-    for item in items:
-        items_html += f'<li><a href="/item/{item["id"]}">{item["name"]}</a> (Количество: {item["quantity"]})</li>'
-    items_html += "</ol>"
-    
-    return HttpResponse(items_html)
+    context = {
+        'title': 'Список товаров',
+        'header': 'Наши товары',
+        'items': items
+    }
+    return render(request, 'MainApp/items_list.html', context)

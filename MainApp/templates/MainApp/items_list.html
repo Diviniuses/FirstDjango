@@ -1,0 +1,13 @@
+{% extends 'MainApp/base.html' %}
+
+{% block content %}
+    <h1>{{ header }}</h1>
+    <ol>
+    {% for item in items %}
+        <li>
+            <a href="/item/{{ item.id }}/">{{ item.name }}</a>
+            (Количество: {{ item.quantity|default:"0" }})
+        </li>
+    {% endfor %}
+    </ol>
+{% endblock %} 
