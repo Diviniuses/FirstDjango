@@ -7,3 +7,5 @@ urlpatterns = [
     path('item/<int:item_id>/', views.item_detail),
     path('items/', views.items_list),
 ]
+
+
