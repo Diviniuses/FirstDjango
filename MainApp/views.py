@@ -24,7 +24,7 @@ items = [
     {"id": 2, "name": "Куртка кожаная", "quantity": 3},
     {"id": 3, "name": "Соса-сola 1 литр", "quantity": 10},
     {"id": 4, "name": "Картофель фри", "quantity": 7},
-    {"id": 5, "name": "Кепка"},
+    {"id": 5, "name": "Кепка", "quantity": 0}
 ]
 
 def item_detail(request, item_id):
@@ -32,7 +32,11 @@ def item_detail(request, item_id):
         item_id = int(item_id)
         for item in items:
             if item['id'] == item_id:
-                return HttpResponse(f"<h1>{item['name']}</h1><p>Количество товара: {item['quantity']}</p>")
+                return HttpResponse(f"""
+                    <h1>{item['name']}</h1>
+                    <p>Количество товара: {item['quantity']}</p>
+                    <p><a href="/items/">Назад к списку товаров</a></p>
+                """)
         
         # Товар не найден 
         return HttpResponseNotFound(f'Товар с id={item_id} не найден')
