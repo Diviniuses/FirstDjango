@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.http import HttpResponseNotFound
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseNotFound
+from .models import Item
 
 def home(request):
     context = {
@@ -22,19 +22,21 @@ def about_page(request):
     }
     return render(request, 'MainApp/about.html', context)
 
-items = [
-    {"id": 1, "name": "Кроссовки abibas", "quantity": 5},
-    {"id": 2, "name": "Куртка кожаная", "quantity": 3},
-    {"id": 3, "name": "Соса-сola 1 литр", "quantity": 10},
-    {"id": 4, "name": "Картофель фри", "quantity": 7},
-    {"id": 5, "name": "Кепка", "quantity": 0}
-]
-
 def item_detail(request, item_id):
-    return redirect('items_list')
+    try:
+        item = Item.objects.get(id=item_id)
+        context = {
+            'header': item.name,
+            'item': item
+        }
+        return render(request, 'MainApp/item.html', context)
+    except Item.DoesNotExist:
+        return HttpResponseNotFound(f"Товар с id {item_id} не найден")
 
 '''Cписок товаров'''
 def items_list(request):
+    items = Item.objects.all().order_by('id')
+    print("Items from database:", [f"{item.id}: {item.name} - {item.quantity}" for item in items])
     context = {
         'title': 'Список товаров',
         'header': 'Наши товары',
