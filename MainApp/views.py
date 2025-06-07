@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 
@@ -31,21 +31,7 @@ items = [
 ]
 
 def item_detail(request, item_id):
-    try:
-        item_id = int(item_id)
-        for item in items:
-            if item['id'] == item_id:
-                quantity = item.get('quantity', 0)
-                context = {
-                    'title': item['name'],
-                    'header': item['name'],
-                    'quantity': quantity
-                }
-                return render(request, 'MainApp/item_detail.html', context)
-        
-        return HttpResponseNotFound(f'Товар с id={item_id} не найден')
-    except ValueError:
-        return HttpResponseNotFound('Неверный формат ID товара')
+    return redirect('items_list')
 
 '''Cписок товаров'''
 def items_list(request):

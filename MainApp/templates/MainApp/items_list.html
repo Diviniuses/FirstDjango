@@ -5,9 +5,36 @@
     <ol>
     {% for item in items %}
         <li>
-            <a href="/item/{{ item.id }}/">{{ item.name }}</a>
-            (Количество: {{ item.quantity|default:"0" }})
+            <a href="#" onclick="showItemDetails('{{ item.name|escapejs }}', {{ item.quantity|default:"0" }}); return false;">
+                {{ item.name }} (Количество: {{ item.quantity|default:"0" }})
+            </a>
         </li>
     {% endfor %}
     </ol>
-{% endblock %} 
+
+    <div id="itemModal">
+        <h2 id="modalTitle"></h2>
+        <p id="modalQuantity"></p>
+        <button onclick="closeModal()" class="modal-button">Закрыть</button>
+    </div>
+
+    <div id="overlay"></div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+    function showItemDetails(name, quantity) {
+        document.getElementById('modalTitle').textContent = name;
+        document.getElementById('modalQuantity').textContent = 'Количество: ' + quantity;
+        document.getElementById('itemModal').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('itemModal').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    }
+
+    document.getElementById('overlay').onclick = closeModal;
+</script>
+{% endblock %}
