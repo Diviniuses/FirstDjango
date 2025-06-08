@@ -1,5 +1,7 @@
 {% extends 'MainApp/base.html' %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {% block content %}
     <h1>{{ header }}</h1>
     <div class="items-grid">
@@ -7,14 +9,11 @@
         <div class="item-card">
             <h3>{{ item.name }}</h3>
             <p class="description">{{ item.description }}</p>
+            <p class="brand">{{ item.brand }}</p>
             <p class="quantity">
-                {% if item.quantity == 0 %}
-                    Товара нет на складе
-                {% else %}
-                    Количество: {{ item.quantity }}
-                {% endif %}
+                Количество: {{ item.quantity | default:"Товар отсутствует" }}
             </p>
-            <a href="/item/{{ item.id }}/" class="item-link">Подробнее</a>
+            <a href="{% url 'item_detail' item.id %}" class="item-link">Подробнее</a>
         </div>
     {% endfor %}
     </div>

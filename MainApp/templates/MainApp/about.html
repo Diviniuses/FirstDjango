@@ -1,10 +1,12 @@
 {% extends 'MainApp/base.html' %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {% block content %}
     <h1>{{ header }}</h1>
-    <p><strong>Имя:</strong> {{ name }}</p>
-    <p><strong>Отчество:</strong> {{ middle_name }}</p>
-    <p><strong>Фамилия:</strong> {{ surname }}</p>
-    <p><strong>Телефон:</strong> {{ phone }}</p>
-    <p><strong>Email:</strong> {{ email }}</p>
+    <p>Имя: {{ name }}</p>
+    <p>Отчество: {{ middle_name }}</p>
+    <p>Фамилия: {{ surname }}</p>
+    <p>Телефон: {{ phone }}</p>
+    <p>email: {{ email }}</p>
 {% endblock %} 

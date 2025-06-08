@@ -42,25 +42,6 @@
         .home-link:hover {
             background-color: #444;
         }
-        ol {
-            padding-left: 20px;
-        }
-        ol li {
-            margin: 10px 0;
-            padding: 5px;
-            border-bottom: 1px solid #eee;
-        }
-        ol li:last-child {
-            border-bottom: none;
-        }
-        ol li a {
-            color: #333;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        ol li a:hover {
-            color: #666;
-        }
         #itemModal {
             display: none;
             position: fixed;
@@ -105,16 +86,4 @@
         <a href="{% url 'items_list' %}">Товары</a>
     </nav>
     
-    <div class="content">
-        {% include 'MainApp/header.html' %}
-        {% block content %}
-        {% endblock %}
-        
-        {% if request.path != '/' %}
-            <a href="{% url 'home' %}" class="home-link">Вернуться на главную</a>
-        {% endif %}
-        {% include 'MainApp/footer.html' %}
-    </div>
-    {% block extra_script %}{% endblock %}
-</body>
-</html> 
+    <div class="content"> 
