@@ -8,7 +8,7 @@ def home(request):
         'header': 'Добро пожаловать в наш магазин',
         'description': 'Здесь вы можете найти все, что вам нужно'
     }
-    return render(request, 'MainApp/index.django.html', context)
+    return render(request, 'MainApp/index.html', context)
 
 def about_page(request):
     context = {
@@ -26,8 +26,8 @@ def item_detail(request, item_id):
     try:
         item = Item.objects.get(id=item_id)
         context = {
-            'header': item.name,
-            'item': item
+            'item': item,
+            'header': item.name
         }
         return render(request, 'MainApp/item.html', context)
     except Item.DoesNotExist:
