@@ -7,6 +7,7 @@
         <h1>{{ header }}</h1>
         <div class="item-info">
             <p class="description">{{ item.description }}</p>
+            <p class="brand">Бренд: {{ item.brand }}</p>
             <p class="quantity">
                 {% if item.quantity == 0 %}
                     Товара нет на складе
@@ -14,31 +15,14 @@
                     Количество: {{ item.quantity }}
                 {% endif %}
             </p>
+            <p class="colors">
+                Цвета: 
+                {% for color in item.colors.all %}
+                    <span class="color-tag">{{ color.name }}</span>
+                {% empty %}
+                    <span class="no-colors">Не указаны</span>
+                {% endfor %}
+            </p>
         </div>
     </div>
-{% endblock %}
-
-{% block extra_style %}
-<style>
-    .item-detail {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-    .item-info {
-        background: white;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .description {
-        color: #666;
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-    .quantity {
-        color: #888;
-        font-size: 1.1em;
-    }
-</style>
 {% endblock %} 

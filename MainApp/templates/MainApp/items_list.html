@@ -9,9 +9,17 @@
         <div class="item-card">
             <h3>{{ item.name }}</h3>
             <p class="description">{{ item.description }}</p>
-            <p class="brand">{{ item.brand }}</p>
             <p class="quantity">
                 Количество: {{ item.quantity | default:"Товар отсутствует" }}
+            </p>
+            <p class="brand">Бренд: {{ item.brand }}</p>
+            <p class="colors">
+                Цвета: 
+                {% for color in item.colors.all %}
+                    <span class="color-tag">{{ color.name }}</span>
+                {% empty %}
+                    <span class="no-colors">Не указаны</span>
+                {% endfor %}
             </p>
             <a href="{% url 'item_detail' item.id %}" class="item-link">Подробнее</a>
         </div>
@@ -72,9 +80,25 @@
         margin-bottom: 15px;
         line-height: 1.4;
     }
-    .quantity {
+    .quantity, .brand {
         color: #888;
         margin-bottom: 15px;
+    }
+    .colors {
+        margin-bottom: 15px;
+    }
+    .color-tag {
+        display: inline-block;
+        padding: 2px 8px;
+        margin: 2px;
+        background: #f0f0f0;
+        border-radius: 12px;
+        font-size: 0.9em;
+        color: #666;
+    }
+    .no-colors {
+        color: #999;
+        font-style: italic;
     }
     .item-link {
         display: inline-block;

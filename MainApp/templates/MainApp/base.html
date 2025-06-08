@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Мой сайт{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'MainApp/css/style.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -99,22 +101,18 @@
     {% block extra_style %}{% endblock %}
 </head>
 <body>
-    <nav>
-        <a href="{% url 'home' %}">Главная</a>
-        <a href="{% url 'about' %}">О нас</a>
-        <a href="{% url 'items_list' %}">Товары</a>
-    </nav>
+    {% include 'MainApp/header.html' %}
     
     <div class="content">
-        {% include 'MainApp/header.html' %}
         {% block content %}
         {% endblock %}
         
         {% if request.path != '/' %}
             <a href="{% url 'home' %}" class="home-link">Вернуться на главную</a>
         {% endif %}
-        {% include 'MainApp/footer.html' %}
     </div>
+
+    <script src="{% static 'MainApp/js/main.js' %}"></script>
     {% block extra_script %}{% endblock %}
 </body>
 </html> 
